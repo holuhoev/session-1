@@ -1,9 +1,12 @@
 package ru.sbt.jschool.session1;
 
+import java.util.Arrays;
+
 public class ExtraTasks {
     public static void main(String[] args) {
-        System.out.println(sumOf("1", "101", 2));
-        System.out.println(sumOf("1", "1", 3));
+        System.out.println(Arrays.toString(intersection(new long[]{1, 2, 3}, new long[]{1, 2, 3})));
+        System.out.println(Arrays.toString(intersection(new long[]{1, 2, 3, 4}, new long[]{2, 3})));
+        System.out.println(Arrays.toString(intersection(new long[]{0}, new long[]{1, 2, 3})));
     }
 
     private static long longValueOf(String s, int radix) {
@@ -42,6 +45,33 @@ public class ExtraTasks {
             throw new NumberFormatException(String.format("for input strings: %s and %s.", s1, s2));
         }
         return result;
+    }
+
+    private static long[] intersection(long[] arr1, long[] arr2) {
+        int len1 = arr1.length, len2 = arr2.length;
+        long[] result = new long[len1 > len2 ? len2 : len1];
+        long[] sortedArr1 = arr1.clone();
+        long[] sortedArr2 = arr2.clone();
+        Arrays.sort(sortedArr1);
+        Arrays.sort(sortedArr2);
+
+        int i = 0;
+        int j = 0;
+        int k = 0;
+        while (i < len1 && j < len2) {
+            if (sortedArr1[i] == sortedArr2[j]) {
+                result[k] = sortedArr1[i];
+                i++;
+                j++;
+                k++;
+            } else if (sortedArr1[i] < sortedArr2[j]) {
+                i++;
+            } else if (sortedArr1[i] > sortedArr2[j]) {
+                j++;
+            }
+        }
+
+        return Arrays.copyOf(result, k);
     }
 
 }
